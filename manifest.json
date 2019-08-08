@@ -13,7 +13,7 @@
       "matches": ["https://soundcloud.com/*"]
     },
     {
-      "js": ["extensionId.js", "Youtube/main.js"],
+      "js": ["extensionId.js", "YouTube/main.js"],
       "matches": ["https://www.youtube.com/*"]
     }
   ]
