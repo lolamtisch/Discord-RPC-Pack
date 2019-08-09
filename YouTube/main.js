@@ -1,24 +1,49 @@
-function urlChangeDetect(callback){
-  var currentPage = window.location.href;
-  return setInterval(function(){
-      if (currentPage != window.location.href){
-          currentPage = window.location.href;
-          callback();
-      }
-  }, 100);
-}
 // Register Presence
 window.onload = function() {
-  chrome.runtime.sendMessage(extensionId, {mode: 'active'}, function(response) {
-    console.log('Presence registred', response)
-  });
+  waitForRegister();
+  setTimeout(() => {
+    chrome.runtime.sendMessage(extensionId, {mode: 'active'}, function(response) {
+      console.log('Presence registred', response)
+    });
+  }, 500);
 };
 
 urlChangeDetect(function() {
-  chrome.runtime.sendMessage(extensionId, {mode: 'active'}, function(response) {
-    console.log('Presence registred', response)
-  });
+  waitForRegister();
 });
+
+var registerInterval;
+function waitForRegister(){
+  clearInterval(registerInterval);
+  registerInterval = waitUntilTrue(() => {
+    console.log(document.getElementsByClassName("video-stream"));
+    return document.getElementsByClassName("video-stream");
+  },
+  () => {
+    var video = document.getElementsByClassName("video-stream")[0];
+    video.onpause = function() {
+      console.info('pause');
+      chrome.runtime.sendMessage(extensionId, {mode: 'active'}, function(response) {
+        console.log('Presence registred', response)
+      });
+    }
+    video.onplaying = function() {
+      console.info('playing');
+      chrome.runtime.sendMessage(extensionId, {mode: 'active'}, function(response) {
+        console.log('Presence registred', response)
+      });
+    }
+    video.oncanplay = function() {
+      console.info('canplay');
+      setTimeout(() => {
+        chrome.runtime.sendMessage(extensionId, {mode: 'active'}, function(response) {
+          console.log('Presence registred', response)
+        });
+      }, 500)
+    }
+
+  })
+}
 
 // Wait for presence Requests
 chrome.runtime.onMessage.addListener(function(info, sender, sendResponse) {
@@ -104,3 +129,25 @@ function getPresence(){
   return {};
 }
 };
+
+//helper
+function urlChangeDetect(callback){
+  var currentPage = window.location.href;
+  return setInterval(function(){
+      if (currentPage != window.location.href){
+          currentPage = window.location.href;
+          callback();
+      }
+  }, 1000);
+}
+
+function waitUntilTrue(condition, callback){
+  var Interval = null;
+  Interval = setInterval(function(){
+      if (condition()){
+          clearInterval(Interval);
+          callback();
+      }
+  }, 100);
+  return Interval;
+}
