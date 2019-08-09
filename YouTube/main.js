@@ -8,16 +8,11 @@ window.onload = function() {
   }, 500);
 };
 
-urlChangeDetect(function() {
-  waitForRegister();
-});
-
 var registerInterval;
 function waitForRegister(){
   clearInterval(registerInterval);
   registerInterval = waitUntilTrue(() => {
-    console.log(document.getElementsByClassName("video-stream"));
-    return document.getElementsByClassName("video-stream");
+    return document.getElementsByClassName("video-stream").length;
   },
   () => {
     var video = document.getElementsByClassName("video-stream")[0];
@@ -131,15 +126,6 @@ function getPresence(){
 };
 
 //helper
-function urlChangeDetect(callback){
-  var currentPage = window.location.href;
-  return setInterval(function(){
-      if (currentPage != window.location.href){
-          currentPage = window.location.href;
-          callback();
-      }
-  }, 1000);
-}
 
 function waitUntilTrue(condition, callback){
   var Interval = null;
