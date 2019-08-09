@@ -53,81 +53,81 @@ chrome.runtime.onMessage.addListener(function(info, sender, sendResponse) {
 
 // Return Presence
 function getPresence(){
- try{
-  var video = document.querySelector(".video-stream");
-  if (video !== null && !isNaN(video.duration)) {
-    var oldYouTube;
-    var title;
+  try{
+    var video = document.querySelector(".video-stream");
+    if (video !== null && !isNaN(video.duration)) {
+      var oldYouTube;
+      var title;
 
-    var live = Boolean(document.querySelector(".ytp-live"))
+      var live = Boolean(document.querySelector(".ytp-live"))
 
-    document.querySelector(".watch-title") !== null
-    ? (oldYouTube = true)
-    : (oldYouTube = false);
+      document.querySelector(".watch-title") !== null
+      ? (oldYouTube = true)
+      : (oldYouTube = false);
 
-    if (!oldYouTube) {
-      title =
-      document.location.pathname !== "/watch"
-      ? document.querySelector(".ytd-miniplayer .title").firstElementChild.textContent
-      : document.querySelector(".title.ytd-video-primary-info-renderer").firstElementChild.textContent
+      if (!oldYouTube) {
+        title =
+        document.location.pathname !== "/watch"
+        ? document.querySelector(".ytd-miniplayer .title").firstElementChild.textContent
+        : document.querySelector(".title.ytd-video-primary-info-renderer").firstElementChild.textContent
+      } else {
+        if (document.location.pathname == "/watch")
+          title = document.querySelector(".watch-title").textContent;
+      }
+
+      if (live) {
+        var startTime = (Date.now() - Math.floor((video.currentTime * 1000)));
+      } else {
+        var endTime = (Date.now() + Math.floor((video.duration * 1000)) -Math.floor((video.currentTime * 1000)));
+      }
+      var uploader =
+      document.querySelector("#owner-name a") !== null
+      ? document.querySelector("#owner-name a").textContent
+      : document.querySelector(".yt-user-info a").textContent
+
+      if (video.paused == true) {
+        return {
+          clientId: '607934326151053332',
+          presence: {
+            state: 'Paused',
+            details: title,
+            largeImageKey: "youtube",
+            smallImageKey: "pause",
+            instance: true,
+          }
+        };
+      } else if (!live) {
+        return {
+          clientId: '607934326151053332',
+          presence: {
+            state: uploader,
+            details: title,
+            endTimestamp: endTime,
+            largeImageKey: "youtube",
+            smallImageKey: "play",
+            instance: true,
+          }
+        };
+      } else {
+        return {
+          clientId: '607934326151053332',
+          presence: {
+            state: uploader,
+            details: title,
+            startTimestamp: startTime,
+            largeImageKey: "youtube",
+            smallImageKey: "play",
+            instance: true,
+          }
+        };
+      }
     } else {
-      if (document.location.pathname == "/watch")
-        title = document.querySelector(".watch-title").textContent;
+      return {};
     }
-
-    if (live) {
-      var startTime = (Date.now() - Math.floor((video.currentTime * 1000)));
-    } else {
-      var endTime = (Date.now() + Math.floor((video.duration * 1000)) -Math.floor((video.currentTime * 1000)));
-    }
-    var uploader =
-    document.querySelector("#owner-name a") !== null
-    ? document.querySelector("#owner-name a").textContent
-    : document.querySelector(".yt-user-info a").textContent
-
-    if (video.paused == true) {
-      return {
-        clientId: '607934326151053332',
-        presence: {
-          state: 'Paused',
-          details: title,
-          largeImageKey: "youtube",
-          smallImageKey: "pause",
-          instance: true,
-        }
-      };
-    } else if (!live) {
-      return {
-        clientId: '607934326151053332',
-        presence: {
-          state: uploader,
-          details: title,
-          endTimestamp: endTime,
-          largeImageKey: "youtube",
-          smallImageKey: "play",
-          instance: true,
-        }
-      };
-    } else {
-      return {
-        clientId: '607934326151053332',
-        presence: {
-          state: uploader,
-          details: title,
-          startTimestamp: startTime,
-          largeImageKey: "youtube",
-          smallImageKey: "play",
-          instance: true,
-        }
-      };
-    }
-  } else {
+  }catch(e){
+    console.error(e);
     return {};
   }
-}catch(e){
-  console.error(e);
-  return {};
-}
 };
 
 //helper
