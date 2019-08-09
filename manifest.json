@@ -11,6 +11,10 @@
     {
       "js": ["extensionId.js", "Soundcloud/main.js"],
       "matches": ["https://soundcloud.com/*"]
+    },
+    {
+      "js": ["extensionId.js", "YouTube/main.js"],
+      "matches": ["https://www.youtube.com/*"]
     }
   ]
 }
