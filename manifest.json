@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Discord RPC Pack",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Basic discord RPC Pack",
   "background": {
     "scripts": ["background.js"],
