@@ -1,17 +1,14 @@
 // Register Presence
 window.onload = function() {
-  waitForRegister();
-  setTimeout(() => {
-    chrome.runtime.sendMessage(extensionId, {mode: 'active'}, function(response) {
-      console.log('Presence registred', response)
-    });
-  }, 500);
 };
 
-urlChangeDetect(function() {
-  waitForRegister();
+waitForRegister();
+setTimeout(() => {
+chrome.runtime.sendMessage(extensionId, {mode: 'active'}, function(response) {
+  console.log('Presence registred', response)
 });
-
+}, 500);
+  
 var registerInterval;
 function waitForRegister(){
   clearInterval(registerInterval);
@@ -130,9 +127,6 @@ function getPresence(){
 };
 
 //helper
-function urlChangeDetect(callback){
-  return callback();
-}
 
 function waitUntilTrue(condition, callback){
   var Interval = null;
