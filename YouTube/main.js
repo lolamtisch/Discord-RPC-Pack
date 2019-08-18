@@ -8,6 +8,10 @@ window.onload = function() {
   }, 500);
 };
 
+urlChangeDetect(function() {
+  waitForRegister();
+});
+
 var registerInterval;
 function waitForRegister(){
   clearInterval(registerInterval);
@@ -126,6 +130,9 @@ function getPresence(){
 };
 
 //helper
+function urlChangeDetect(callback){
+  return callback();
+}
 
 function waitUntilTrue(condition, callback){
   var Interval = null;
