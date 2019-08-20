@@ -1,5 +1,5 @@
 // Register Presence
-window.onload = function() {
+function init() {
   waitForRegister();
   setTimeout(() => {
     chrome.runtime.sendMessage(extensionId, {mode: 'active'}, function(response) {
@@ -7,6 +7,8 @@ window.onload = function() {
     });
   }, 500);
 };
+
+init();
 
 var registerInterval;
 function waitForRegister(){
