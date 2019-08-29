@@ -80,7 +80,7 @@ function getPresence(){
       var uploader =
       document.querySelector("#owner-name a") !== null
       ? document.querySelector("#owner-name a").textContent
-      : document.querySelector(".yt-user-info a").textContent
+      : document.querySelector("#text > a").textContent
 
       if (video.paused == true) {
         return {
