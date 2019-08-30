@@ -77,10 +77,17 @@ function getPresence(){
       } else {
         var endTime = (Date.now() + Math.floor((video.duration * 1000)) -Math.floor((video.currentTime * 1000)));
       }
-      var uploader =
-      document.querySelector("#owner-name a") !== null
-      ? document.querySelector("#owner-name a").textContent
-      : document.querySelector("#text > a").textContent
+      try{
+        var uploader = document.querySelector(`
+          #owner-name a,
+          ytd-channel-name.ytd-video-owner-renderer > div > div > yt-formatted-string > a,
+          .yt-user-info > a
+        `).textContent
+      }catch(e){
+        console.error('Could not retrive uploader', e);
+        var uploader = '';
+      }
+
 
       if (video.paused == true) {
         return {
