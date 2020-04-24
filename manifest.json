@@ -32,6 +32,10 @@
       "js": ["extensionId.js", "VRV/sendTitle.js"],
       "matches": ["https://vrv.co/*"],
 	  "all_frames": true
+    },
+    {
+      "js": ["extensionId.js", "RoosterTeeth/main.js"],
+      "matches": ["https://roosterteeth.com/*"]
     }
   ]
 }
