@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Discord RPC Pack",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Basic discord RPC Pack",
   "background": {
     "scripts": ["background.js"],
@@ -22,6 +22,16 @@
     {
       "js": ["extensionId.js", "YouTube/main.js"],
       "matches": ["https://www.youtube.com/*"]
+    },
+    {
+      "js": ["extensionId.js", "VRV/main.js"],
+      "matches": ["https://static.vrv.co/*"],
+	  "all_frames": true
+    },
+    {
+      "js": ["extensionId.js", "VRV/sendTitle.js"],
+      "matches": ["https://vrv.co/*"],
+	  "all_frames": true
     }
   ]
 }
