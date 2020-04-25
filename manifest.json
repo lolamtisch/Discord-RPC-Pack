@@ -36,6 +36,10 @@
     {
       "js": ["extensionId.js", "RoosterTeeth/main.js"],
       "matches": ["https://roosterteeth.com/*"]
+    },
+    {
+      "js": ["extensionId.js", "Twitch/main.js"],
+      "matches": ["https://www.twitch.tv/*"]
     }
   ]
 }
