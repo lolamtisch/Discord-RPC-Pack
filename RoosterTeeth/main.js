@@ -69,7 +69,7 @@ function getPresence(){
 
       if (video.paused == true) {
         return {
-          clientId: '703327607550378084',
+          clientId: '703697546794631209',
           presence: {
             state: 'Paused',
             details: title,
@@ -80,7 +80,7 @@ function getPresence(){
         };
       } else if(!live){
         return {
-          clientId: '703327607550378084',
+          clientId: '703697546794631209',
           presence: {
             state: uploader,
             details: title,
@@ -92,13 +92,13 @@ function getPresence(){
         };
       }else{
 	        return {
-          clientId: '703327607550378084',
+          clientId: '703697546794631209',
           presence: {
             state: "RT-TV",
             details: title,
             startTimestamp: startTime,
             largeImageKey: "roosterteeth",
-            smallImageKey: "play",
+            smallImageKey: "live",
             instance: true,
           }
         };
