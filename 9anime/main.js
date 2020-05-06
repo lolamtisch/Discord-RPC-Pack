@@ -1,4 +1,4 @@
-  chrome.runtime.sendMessage(extensionId, {mode: 'passive'}, function(response) {
+chrome.runtime.sendMessage(extensionId, {mode: 'passive'}, function(response) {
     console.log('Presence registred', response);
   });
   
@@ -8,22 +8,35 @@
     sendResponse(getPresence(info));
   });
   
-  
+
+/* 
+ some explination:
+ today is the Date.now() function packed into
+ a variable for usage in todayI.
+ todayI gets saved after a request, but changes when the 
+ request changes.
+*/
+  var today = Date.now();
+  var todayI = today;  
   function getPresence(info){
+    todayI = today;
       try{
         return {
           clientId: '707323113922101268',
             presence: {
-                  state: 'watching',
+                  state: 'Watching',
                   details: document.getElementsByClassName('title')[0].textContent,
-                  startTimestamp: Date.now() / 1000,
+                  startTimestamp: todayI,
                   largeImageKey: "header",
+                  largeImageKeyText: 'on ' + window.location.host.toString(),
                   smallImageKey: "play",
                   instance: true,
+
               }
         }
       } catch(e){
         console.error(e);
+        todayI = today;
         return {};
       }
     }
