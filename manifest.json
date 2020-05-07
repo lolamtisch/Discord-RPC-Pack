@@ -20,6 +20,10 @@
       "matches": ["https://soundcloud.com/*"]
     },
     {
+      "js": ["extensionId.js", "Twitch/main.js"],
+      "matches": ["https://www.twitch.tv/*"]
+    },
+    {
       "js": ["extensionId.js", "9anime/main.js"],
       "matches": ["https://9anime.to/*", "https://9anime.tv/*", "https://9anime.live/*", "https://9anime.love/*", "https://9anime.nl/*", "https://9anime.one/*", "https://9anime.page/*",
         "https://9anime.ru/*", "https://9anime.video/*"]
