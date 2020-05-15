@@ -16,11 +16,13 @@
         return {
           clientId: '707557815639605298',
             presence: {
-                  state: 'Watching ' + document.getElementsByClassName('tw-c-text-inherit tw-font-size-5 tw-white-space-nowrap')[0].textContent,
-                  details: document.getElementsByClassName('tw-font-size-4 tw-line-height-body')[0].textContent,
+                  state: 'Watching ' + document.getElementsByClassName('tw-c-text-base tw-font-size-4 tw-line-height-heading tw-strong')[0].textContent,
+                  details: document.getElementsByClassName('tw-ellipsis tw-font-size-5 tw-line-clamp-2 tw-strong tw-word-break-word')[0].textContent,
                   startTimestamp: todayI,
-                  largeImageKey: "header",
-                  smallImageKey: "play",
+                  largeImageKey: 'header',
+                  largeImageText: 'on ' + window.location.host.toString(),
+                  smallImageKey: 'play',
+                  smallImageText: 'playing',
                   instance: true,
 
               }
