@@ -22,6 +22,10 @@
     {
       "js": ["extensionId.js", "YouTube/main.js"],
       "matches": ["https://www.youtube.com/*"]
+    },
+    {
+      "js": ["extensionId.js", "Twitch/main.js"],
+      "matches": ["https://www.twitch.tv/*"]
     }
   ]
 }
