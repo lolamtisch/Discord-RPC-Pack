@@ -5,6 +5,7 @@
   "description": "Basic discord RPC Pack",
   "background": {
     "scripts": [
+      "extensionId.js",
       "background.js",
       "Twitch/background.js"
     ],
