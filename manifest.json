@@ -4,7 +4,10 @@
   "version": "0.0.5",
   "description": "Basic discord RPC Pack",
   "background": {
-    "scripts": ["background.js"],
+    "scripts": [
+      "background.js",
+      "Twitch/background.js"
+    ],
     "persistent": false
   },
   "icons": {

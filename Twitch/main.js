@@ -113,6 +113,8 @@ function getPresence(){
             startTimestamp: startTime,
             largeImageKey: "twitch",
             smallImageKey: "live",
+            partyId: "party:"+channel,
+            joinSecret: window.location.pathname,
             instance: true,
           }
         };
