@@ -105,7 +105,7 @@ function getPresence(){
           }
         };
       } else {
-        return {
+        let presence = {
           clientId: '611467991938367518',
           presence: {
             state: channel,
@@ -118,6 +118,18 @@ function getPresence(){
             instance: true,
           }
         };
+
+        let viewers = document.querySelector('[data-a-target="animated-channel-viewers-count"]');
+        if(viewers){
+          var views = parseInt(viewers.textContent.replace('.', ''));
+          if(views) {
+            if(views < 5) views = 5;
+            presence.presence.partySize = 1;
+            presence.presence.partyMax = views;
+          }
+        }
+
+        return presence;
       }
     } else {
 
