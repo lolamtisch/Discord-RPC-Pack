@@ -39,6 +39,15 @@ function waitForRegister(){
       }, 500)
     }
 
+    let removeInterval;
+    removeInterval = waitUntilTrue(() => {
+      return !document.body.contains(video);
+    },
+    () => {
+      clearInterval(removeInterval);
+      waitForRegister()
+    });
+
   })
 }
 
@@ -160,6 +169,6 @@ function waitUntilTrue(condition, callback){
           clearInterval(Interval);
           callback();
       }
-  }, 100);
+  }, 500);
   return Interval;
 }
