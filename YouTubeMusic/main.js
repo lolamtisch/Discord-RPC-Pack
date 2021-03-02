@@ -2,7 +2,7 @@
 function init() {
     waitForRegister();
     setTimeout(() => {
-        chrome.runtime.sendMessage(extensionId, {mode: 'active'}, function (response) {
+        chrome.runtime.sendMessage(extensionId, {mode: 'passive'}, function (response) {
             console.log('Presence registred', response)
         });
     }, 500);
@@ -21,20 +21,20 @@ function waitForRegister() {
             var video = document.getElementsByClassName("video-stream")[0];
             video.onpause = function () {
                 console.info('pause');
-                chrome.runtime.sendMessage(extensionId, {mode: 'active'}, function (response) {
+                chrome.runtime.sendMessage(extensionId, {mode: 'passive'}, function (response) {
                     console.log('Presence registred', response)
                 });
             }
             video.onplaying = function () {
                 console.info('playing');
-                chrome.runtime.sendMessage(extensionId, {mode: 'active'}, function (response) {
+                chrome.runtime.sendMessage(extensionId, {mode: 'passive'}, function (response) {
                     console.log('Presence registred', response)
                 });
             }
             video.oncanplay = function () {
                 console.info('canplay');
                 setTimeout(() => {
-                    chrome.runtime.sendMessage(extensionId, {mode: 'active'}, function (response) {
+                    chrome.runtime.sendMessage(extensionId, {mode: 'passive'}, function (response) {
                         console.log('Presence registred', response)
                     });
                 }, 500)
