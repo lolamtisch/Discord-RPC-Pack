@@ -101,6 +101,22 @@ function getPresence(){
           }
         };
       } else if (!live) {
+        var buttons = [];
+        try {
+          const url = document.URL.includes("/watch?v=")
+            ? document.URL.split("&")[0]
+            : `https://www.youtube.com/watch?v=${document
+                .querySelector("#page-manager > ytd-watch-flexy")
+                .getAttribute("video-id")}`
+          if (url) buttons.push({
+            label: 'Watch',
+            url: url
+          })
+        } catch (e) {
+          console.error('Could not retrive buttons', e);
+          buttons = []
+        }
+
         return {
           clientId: '607934326151053332',
           presence: {
@@ -109,10 +125,27 @@ function getPresence(){
             endTimestamp: endTime,
             largeImageKey: "youtube",
             smallImageKey: "play",
+            buttons: buttons,
             instance: true,
           }
         };
       } else {
+        var buttons = [];
+        try {
+          const url = document.URL.includes("/watch?v=")
+            ? document.URL.split("&")[0]
+            : `https://www.youtube.com/watch?v=${document
+                .querySelector("#page-manager > ytd-watch-flexy")
+                .getAttribute("video-id")}`
+          if (url) buttons.push({
+            label: 'Watch',
+            url: url
+          })
+        } catch (e) {
+          console.error('Could not retrive buttons', e);
+          buttons = []
+        }
+
         return {
           clientId: '607934326151053332',
           presence: {
@@ -121,6 +154,7 @@ function getPresence(){
             startTimestamp: startTime,
             largeImageKey: "youtube",
             smallImageKey: "play",
+            buttons: buttons,
             instance: true,
           }
         };
