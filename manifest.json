@@ -28,6 +28,10 @@
       "matches": ["https://www.youtube.com/*"]
     },
     {
+      "js": ["extensionId.js", "YouTubeMusic/main.js"],
+      "matches": ["https://music.youtube.com/*"]
+    },
+    {
       "js": ["extensionId.js", "Twitch/main.js"],
       "matches": ["https://www.twitch.tv/*"]
     }
