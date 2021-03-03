@@ -102,6 +102,17 @@ function getPresence(){
           }
         };
       } else if (!live) {
+        var buttons = [];
+        try {
+          buttons.push({
+            label: 'Watch',
+            url: window.location.href
+          })
+        } catch (e) {
+          console.error('Could not retrive buttons', e);
+          buttons = []
+        }
+
         return {
           clientId: '611467991938367518',
           presence: {
@@ -110,10 +121,22 @@ function getPresence(){
             endTimestamp: endTime,
             largeImageKey: "twitch",
             smallImageKey: "play",
+            buttons: buttons,
             instance: true,
           }
         };
       } else {
+        var buttons = [];
+        try {
+          buttons.push({
+            label: 'Join',
+            url: window.location.href
+          })
+        } catch (e) {
+          console.error('Could not retrive buttons', e);
+          buttons = []
+        }
+
         let presence = {
           clientId: '611467991938367518',
           presence: {
@@ -122,8 +145,9 @@ function getPresence(){
             startTimestamp: startTime,
             largeImageKey: "twitch",
             smallImageKey: "live",
-            partyId: "party:"+channel,
-            joinSecret: window.location.pathname,
+            //partyId: "party:"+channel,
+            //joinSecret: window.location.pathname,
+            buttons: buttons,
             instance: true,
           }
         };
@@ -133,8 +157,8 @@ function getPresence(){
           var views = parseInt(viewers.textContent.replace('.', ''));
           if(views) {
             if(views < 5) views = 5;
-            presence.presence.partySize = 1;
-            presence.presence.partyMax = views;
+            //presence.presence.partySize = 1;
+            //presence.presence.partyMax = views;
           }
         }
 
