@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "Discord RPC Pack",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "This is an expansion pack for the extension Discord Rich Presence. It adds discord RPC support for Soundcloud, youtube and twitch.",
   "background": {
     "scripts": [
