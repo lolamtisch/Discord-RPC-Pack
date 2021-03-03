@@ -88,3 +88,52 @@ function getPresence(info) {
         return {};
     }
 };
+
+waitForRegister();
+
+var registerInterval;
+function waitForRegister(){
+  clearInterval(registerInterval);
+  registerInterval = waitUntilTrue(() => {
+    return document.getElementsByClassName("video-stream").length;
+  },
+  () => {
+    var video = document.getElementsByClassName("video-stream")[0];
+    video.onpause = function() {
+      console.info('pause', video.currentTime, video);
+      chrome.runtime.sendMessage(extensionId, {mode: 'active'}, function(response) {
+        console.log('Presence registred', response)
+      });
+      if (video.currentTime === 0) {
+          console.info('Search new player');
+          waitForRegister();
+      }
+    }
+    video.onplaying = function() {
+      console.info('playing');
+      chrome.runtime.sendMessage(extensionId, {mode: 'active'}, function(response) {
+        console.log('Presence registred', response)
+      });
+    }
+    video.oncanplay = function() {
+      console.info('canplay');
+      setTimeout(() => {
+        chrome.runtime.sendMessage(extensionId, {mode: 'active'}, function(response) {
+          console.log('Presence registred', response)
+        });
+      }, 500)
+    }
+
+  })
+}
+
+function waitUntilTrue(condition, callback){
+  var Interval = null;
+  Interval = setInterval(function(){
+      if (condition()){
+          clearInterval(Interval);
+          callback();
+      }
+  }, 100);
+  return Interval;
+}
