@@ -6,11 +6,11 @@ chrome.runtime.sendMessage(extensionId, {mode: 'passive'}, function(response) {
 // Wait for presence Requests
 chrome.runtime.onMessage.addListener(function (info, sender, sendResponse) {
     console.log('Presence requested', info);
-    sendResponse(getPresence());
+    sendResponse(getPresence(info));
 });
 
 // Return Presence
-function getPresence() {
+function getPresence(info) {
     try {
         var video = document.querySelector(".video-stream");
         if (video !== null && !isNaN(video.duration)) {
@@ -19,15 +19,18 @@ function getPresence() {
 
             var subtitle;
             try {
-                subtitle = document.querySelector("span.ytmusic-player-bar.subtitle yt-formatted-string").title;
+                subtitle = [...document.querySelectorAll("span.ytmusic-player-bar.subtitle yt-formatted-string a")].map(el => {
+                    return el.textContent;
+                }).join(' • ');
             } catch (e) {
                 console.error('Could not retrive uploader', e);
                 subtitle = '';
             }
 
             if (video.paused) {
+                if(!info.active) return {};
                 return {
-                    clientId: '607934326151053332',
+                    clientId: '816596186781581332',
                     presence: {
                         state: 'Paused',
                         details: title,
@@ -37,18 +40,46 @@ function getPresence() {
                     }
                 };
             } else {
+                var buttons = [];
+                try {
+                    document.querySelectorAll("span.ytmusic-player-bar.subtitle yt-formatted-string a").forEach(el => {
+                        if (el && el.textContent && el.href && buttons.length < 3) {
+                            buttons.push({
+                                label: el.textContent.replace(/\([^\)]*\)/, '',).slice(0, 20),
+                                url: el.href
+                            })
+                        }
+
+                    })
+
+                } catch (e) {
+                    console.error('Could not retrive buttons', e);
+                    buttons = [];
+                }
+
                 return {
-                    clientId: '607934326151053332',
+                    clientId: '816596186781581332',
                     presence: {
                         state: subtitle,
                         details: title,
                         endTimestamp: endTime,
                         largeImageKey: "youtube",
                         smallImageKey: "play",
+                        buttons: buttons,
                         instance: true,
                     }
                 };
             }
+        } else if(info.active) {
+            return {
+                    clientId: '816596186781581332',
+                    presence: {
+                        state: '',
+                        details: 'Browsing',
+                        largeImageKey: "youtube",
+                        instance: true,
+                    }
+                };
         } else {
             return {};
         }
