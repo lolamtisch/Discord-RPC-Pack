@@ -18,6 +18,18 @@ function getPresence(info){
   try{
 
     if(document.getElementsByClassName('playControl')[0].classList.contains('playing')){
+      var buttons = [];
+      try {
+        buttons.push({
+          label: 'Open',
+          url: document.getElementsByClassName('playbackSoundBadge__titleLink')[0].href,
+        })
+      } catch (e) {
+        console.error('Could not retrive buttons', e);
+        buttons = []
+      }
+
+
       return {
         clientId: '607153108375830548',
         presence: {
@@ -26,6 +38,7 @@ function getPresence(info){
           startTimestamp: Date.now() - getMS(document.getElementsByClassName('playbackTimeline__timePassed')[0].lastElementChild.textContent),
           largeImageKey: "soundcloud",
           smallImageKey: "play",
+          buttons: buttons,
           instance: true,
         }
       };
