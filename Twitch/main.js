@@ -60,7 +60,7 @@ chrome.runtime.onMessage.addListener(function(info, sender, sendResponse) {
 // Return Presence
 function getPresence(){
   try{
-    var video = document.getElementsByTagName("video")[document.getElementsByTagName("video").length-1]
+    var video = querySelector(".video-player video")
     if (video && !isNaN(video.duration) && document.querySelector('[data-a-target="stream-title"]')) {
 	  var live = Boolean(document.querySelector(".video-player .tw-channel-status-text-indicator"))
 	  try{
