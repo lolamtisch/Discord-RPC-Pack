@@ -60,27 +60,31 @@ chrome.runtime.onMessage.addListener(function(info, sender, sendResponse) {
 // Return Presence
 function getPresence(){
   try{
-    var video = querySelector(".video-player video")
-    if (video && !isNaN(video.duration) && document.querySelector('[data-a-target="stream-title"]')) {
-	  var live = Boolean(document.querySelector(".video-player .tw-channel-status-text-indicator"))
-	  try{
-        if(document.getElementsByTagName("video").length>1){
-		  var title=""
-        }else{
-		  var title=document.querySelector('[data-a-target="stream-title"]')!=undefined?document.querySelector('[data-a-target="stream-title"]').childNodes[0].nodeValue:document.querySelector("title").innerText.replace('- twitch','')
-	    }
-	  }catch(e){
+    var player = getMainPlayer();
+    if (player && player.video && !isNaN(player.video.duration) && (document.querySelectorAll('[data-a-target="stream-title"],[data-test-selector="stream-info-card-component__subtitle"]'))) {
+      var live = Boolean(document.querySelector(".video-player .tw-channel-status-text-indicator"))
+      try {
+        if(player.node.dataset.aPlayerType == 'squad_primary'){
+          var title=player.node.querySelector('[data-test-selector="stream-info-card-component__subtitle"]').innerText;
+        } else {
+          var title=document.querySelector('[data-a-target="stream-title"]')!=undefined?document.querySelector('[data-a-target="stream-title"]').childNodes[0].nodeValue:document.querySelector("title").innerText.replace('- twitch','')
+        }
+      } catch(e) {
         console.error('Could not retrive title', e);
         var title = '';
       }
 
-	  if (live) {
-        var startTime = (Date.now() - Math.floor((video.currentTime * 1000)));
+      if (live) {
+        var startTime = (Date.now() - Math.floor((player.video.currentTime * 1000)));
       } else {
-        var endTime = (Date.now() + Math.floor((video.duration * 1000)) -Math.floor((video.currentTime * 1000)));
+        var endTime = (Date.now() + Math.floor((player.video.duration * 1000)) -Math.floor((player.video.currentTime * 1000)));
       }
       try{
-        var channel = document.querySelector("h1.tw-line-height-heading").textContent
+        if(player.node.dataset.aPlayerType == 'squad_primary'){
+          var channel = player.node.querySelector('.stream-info-social-panel .tw-image-avatar').alt;
+        } else {
+          var channel = document.querySelector("h1.tw-line-height-heading").textContent
+        }
       }catch(e){
         console.error('Could not retrive uploader', e);
         var channel = '';
@@ -90,7 +94,7 @@ function getPresence(){
       console.log(channel);
 
 
-      if (video.paused == true) {
+      if (player.video.paused == true) {
         return {
           clientId: '611467991938367518',
           presence: {
@@ -195,4 +199,20 @@ function waitUntilTrue(condition, callback){
       }
   }, 500);
   return Interval;
+}
+
+function getMainPlayer() {
+  var players = document.querySelectorAll('.video-player')
+  for (var i = 0; i < players.length; i++) {
+    switch (players[i].dataset.aPlayerType) {
+      case 'site':
+      case 'watch_party_host':
+      case 'squad_primary':
+        return {
+          node: players[i],
+          video: players[i].getElementsByTagName("video")[0]
+        };
+    }
+  }
+  return null;
 }
